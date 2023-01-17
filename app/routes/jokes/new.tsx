@@ -1,24 +1,46 @@
-export default function NewJokeRoute() {
-    return (
-      <div>
-        <p>Add your own hilarious joke</p>
-        <form method="post">
-          <div>
-            <label>
-              Name: <input type="text" name="name" />
-            </label>
-          </div>
-          <div>
-            <label>
-              Content: <textarea name="content" />
-            </label>
-          </div>
-          <div>
-            <button type="submit" className="button">
-              Add
-            </button>
-          </div>
-        </form>
-      </div>
-    );
+import type { ActionArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { createJoke } from "~/model/jokes.server";
+
+
+export const action = async ({ request }: ActionArgs) => {
+  const form = await request.formData();
+  const name = form.get("name");
+  const content = form.get("content");
+  if (
+    typeof name !== "string" ||
+    typeof content !== "string"
+  ) {
+    throw new Error(`Form not submitted correctly.`);
   }
+
+  const fields = { name, content };
+
+  const joke = await createJoke(fields);
+  return redirect(`/jokes/${joke.id}`);
+};
+
+export default function NewJokeRoute() {
+  return (
+    <div>
+      <p>Add your own hilarious joke</p>
+      <form method="post">
+        <div>
+          <label>
+            Name: <input type="text" name="name" required/>
+          </label>
+        </div>
+        <div>
+          <label>
+            Content: <textarea name="content" required />
+          </label>
+        </div>
+        <div>
+          <button type="submit" className="button" >
+            Add
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

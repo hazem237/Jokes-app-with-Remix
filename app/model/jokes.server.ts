@@ -10,3 +10,7 @@ export async function getJokesBasedId(id:string) {
         where :{id:"12bb586b-ef78-4075-b9ab-8accb1d725d7"}
     });
 }
+
+export async function createJoke(joke) {
+    return prisma.joke.create({data:joke})
+}
