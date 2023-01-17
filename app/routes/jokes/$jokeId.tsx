@@ -7,17 +7,17 @@ export const loader:LoaderFunction= async({params})=>{
     const {jokeId} = params
     invariant(jokeId , "id is required")
     const jokes = await getJokesBasedId(jokeId);
-    return json ({title : jokes?.content})
+    return json ({content : jokes?.content , title:jokes?.name})
 }
 
 
 export default function JokeRoute() {
-    const {title} = useLoaderData();
+    const {content , title} = useLoaderData();
     return (
       <div>
-        <p>Here's your hilarious joke:</p>
+        <p>Here's your <span style={{color:"gold"}}>{title}</span> joke:</p>
         <p>
-         {title}
+         {content}
         </p>
       </div>
     );

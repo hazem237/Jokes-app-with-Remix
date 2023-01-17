@@ -11,6 +11,6 @@ export async function getJokesBasedId(jokeId:string) {
     });
 }
 
-export async function createJoke(joke) {
+export async function createJoke(joke:object) {
     return prisma.joke.create({data:joke})
 }
