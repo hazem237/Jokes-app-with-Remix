@@ -15,7 +15,7 @@ export default function IndexRoute() {
           Remix <span>Jokes!</span> <span>😜</span>
         </h1>
         <nav>
-          <ul>
+          <ul style={{marginTop:50}}>
             <li>
               <Link to="jokes" className="button" style={{marginTop:"150"}}>Read Jokes</Link>
             </li>

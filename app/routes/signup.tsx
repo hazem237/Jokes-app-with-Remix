@@ -27,12 +27,7 @@ function validateUsername(username: unknown) {
   }
 
 export const action:ActionFunction=async({request} : ActionArgs)=>{
-    const form = await request.formData();
-    const loginType = form.get("loginType");
-    const username = form.get("username");
-    const password = form.get("password");
-    
-    return redirect('..')
+   
 }
 
 export default function Login() {
@@ -40,7 +35,7 @@ export default function Login() {
   return (
     <div className="container">
       <div className="content" data-light="">
-        <h1 style={{fontSize:45}}>Login🗝️</h1>
+        <h1 style={{fontSize:45}}>SignUp 👤</h1>
         <form method="post">
           <input
             type="hidden"
@@ -53,7 +48,6 @@ export default function Login() {
             <legend className="sr-only">
               Login or Register?
             </legend>
-
           </fieldset>
           <div>
             <label htmlFor="username-input">Username</label>
