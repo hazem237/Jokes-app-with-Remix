@@ -28,6 +28,11 @@ function validateUsername(username: unknown) {
 
 export const action:ActionFunction=async({request} : ActionArgs)=>{
     const form = await request.formData();
+    const signup = form.get('signupbtn')
+    if(signup==='signup')
+    {
+      return redirect('/signup')
+    }
     const loginType = form.get("loginType");
     const username = form.get("username");
     const password = form.get("password");
@@ -71,8 +76,11 @@ export default function Login() {
               type="password"
             />
           </div>
-          <button type="submit" className="button">
+          <button type="submit" className="button" name="login">
             Submit
+          </button>
+          <button type="submit" className="button" name="signupbtn" value="signup">
+            Sign Up
           </button>
         </form>
       </div>

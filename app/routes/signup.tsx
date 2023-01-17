@@ -1,5 +1,6 @@
 import { ActionArgs, ActionFunction, LinksFunction, redirect } from "@remix-run/node";
 import { Link, useSearchParams } from "@remix-run/react";
+import { createUser } from "~/model/user.server";
 
 import stylesUrl from "~/styles/login.css";
 
@@ -27,7 +28,11 @@ function validateUsername(username: unknown) {
   }
 
 export const action:ActionFunction=async({request} : ActionArgs)=>{
-   
+   const form = await request.formData()
+   const name = form.get('username')
+   const password = form.get('password')
+   await createUser({username:name , passwordHash:password})
+   return redirect('..')
 }
 
 export default function Login() {
