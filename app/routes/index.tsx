@@ -1,8 +1,11 @@
-export default function Index() {
-  return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-     <h1>Test</h1>
-     <h1>Hello</h1>
-    </div>
-  );
+import type { LinksFunction } from "@remix-run/node";
+
+import stylesUrl from "~/styles/index.css";
+
+export const links: LinksFunction = () => {
+  return [{ rel: "stylesheet", href: stylesUrl }];
+};
+
+export default function IndexRoute() {
+  return <div>Hello Index Route</div>;
 }
