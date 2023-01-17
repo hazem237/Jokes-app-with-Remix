@@ -1,0 +1,8 @@
+export default function Index() {
+  return (
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
+     <h1>Test</h1>
+     <h1>Hello</h1>
+    </div>
+  );
+}
