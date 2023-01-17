@@ -1,21 +1,23 @@
 import { json, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import invariant from "tiny-invariant";
 import { getJokesBasedId } from "~/model/jokes.server";
 
 export const loader:LoaderFunction= async({params})=>{
-    const id = params.id
-    const jokes = await getJokesBasedId(id);
-    return json ({jokes})
+    const {jokeId} = params
+    invariant(jokeId , "id is required")
+    const jokes = await getJokesBasedId(jokeId);
+    return json ({title : jokes?.content})
 }
 
 
 export default function JokeRoute() {
-    const {joke} = useLoaderData();
+    const {title} = useLoaderData();
     return (
       <div>
         <p>Here's your hilarious joke:</p>
         <p>
-         Test
+         {title}
         </p>
       </div>
     );
