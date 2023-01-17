@@ -30,13 +30,20 @@ export const action = async ({ request }: ActionArgs) => {
   if (typeof name !== "string" || typeof content !== "string") {
     throw new Error(`Form not submitted correctly.`);
   }
-  const AnyError = {
-    title: content ? null : "title is reqired",
-    content: content ? null : "content is reqired"
+  const AnyMissingDataError = {
+    title: content ? null : "name is reqired",
+    content: content ? null : "content is reqired",
   };
-  const hasError = Object.values(AnyError).some((el) => el);
-  if (hasError) {
-    return json<ActionData>(AnyError);
+  const AnyDataError = {
+    title: content.length < 3 ? null : "joke's name is too short",
+    content: content.length < 10 ? null : "Your joke is too short",
+  };
+
+  if (Object.values(AnyMissingDataError).some((el) => el)) {
+    return json<ActionData>(AnyMissingDataError);
+  }
+  if (Object.values(AnyDataError).some((el) => el)) {
+    return json<ActionData>(AnyDataError);
   }
   const fields = { name, content };
 
@@ -45,7 +52,7 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export default function NewJokeRoute() {
-  const error = useActionData() as ActionData;
+  const AnyMissingDataError = useActionData() as ActionData;
   return (
     <div>
       <p>Add your own hilarious joke</p>
@@ -53,13 +60,19 @@ export default function NewJokeRoute() {
       <form method="post">
         <div>
           <label>
-            Name {error?.title ? <em style={{color:"red"}}>{error.title}</em> : null}
-            <input type="text" name="name"  />
+            Name{" "}
+            {AnyMissingDataError?.title ? (
+              <em style={{ color: "red" }}>{AnyMissingDataError.title}</em>
+            ) : null}
+            <input type="text" name="name" />
           </label>
         </div>
         <div>
           <label>
-            Content: {error?.content ? <em style={{color:"red"}}>{error.content}</em> : null}
+            Content:{" "}
+            {AnyMissingDataError?.content ? (
+              <em style={{ color: "red" }}>{AnyMissingDataError.content}</em>
+            ) : null}
             <textarea name="content"  />
           </label>
         </div>
