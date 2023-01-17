@@ -7,5 +7,5 @@ export const links: LinksFunction = () => {
 };
 
 export default function IndexRoute() {
-  return <div>Hello Index Route</div>;
+  return <div><h2>Hello Index Route</h2></div>;
 }
