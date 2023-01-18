@@ -73,7 +73,7 @@ export default function NewJokeRoute() {
             {AnyMissingDataError?.content ? (
               <em style={{ color: "red" }}>{AnyMissingDataError.content}</em>
             ) : null}
-            <textarea name="content"/>
+            <textarea name="content" />
           </label>
         </div>
         <div>

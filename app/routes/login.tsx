@@ -6,6 +6,8 @@ import {
   redirect,
 } from "@remix-run/node";
 import { Link, useActionData, useSearchParams } from "@remix-run/react";
+import invariant from "tiny-invariant";
+import { login } from "~/model/user.server";
 
 import stylesUrl from "~/styles/login.css";
 
@@ -46,11 +48,19 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     return redirect("/signup");
   }
   const loginType = form.get("loginType");
+  
   const username = form.get("username");
+
   const password = form.get("password");
+  console.log(username , password)
+  const user = await login(username , password);
+      console.log({ user });
+      if (!user) {
+       return json({message:"Errrrrrrror"})
+      }
   const AnyMissingDataError = {
     username: username ? null : "name is reqired",
-    password: password ? null : "content is reqired",
+    password: password ? null : "password is reqired",
   };
   if (Object.values(AnyMissingDataError).some((el) => el)) {
     return json<ActionData>(AnyMissingDataError);
@@ -85,8 +95,9 @@ export default function Login() {
             <input type="text" id="username-input" name="username" />
           </div>
           <div>
-            <label htmlFor="password-input">Password
-            {AnyMissingDataError?.password ? (
+            <label htmlFor="password-input">
+              Password
+              {AnyMissingDataError?.password ? (
                 <em style={{ color: "red" }}>{AnyMissingDataError.password}</em>
               ) : null}
             </label>
