@@ -7,7 +7,7 @@ import {
 } from "@remix-run/node";
 import { Link, useActionData, useSearchParams } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import { login } from "~/model/user.server";
+import { createUserSession, login } from "~/model/user.server";
 
 import stylesUrl from "~/styles/login.css";
 
@@ -66,7 +66,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     return json<ActionData>(AnyMissingDataError);
   }
 
-  return redirect("..");
+  return createUserSession(user.id, '/jokes');
 };
 
 export default function Login() {

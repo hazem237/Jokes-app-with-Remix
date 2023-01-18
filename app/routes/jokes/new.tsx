@@ -2,6 +2,7 @@ import type { ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { json, useActionData } from "react-router";
 import { createJoke } from "~/model/jokes.server";
+import { requireUserId } from "~/model/user.server";
 
 type ActionData =
   | {
@@ -24,6 +25,7 @@ const titleValidation = (title: string): string | null => {
 };
 
 export const action = async ({ request }: ActionArgs) => {
+  const userId = await requireUserId(request);
   const form = await request.formData();
   const name = form.get("name");
   const content = form.get("content");
@@ -45,7 +47,7 @@ export const action = async ({ request }: ActionArgs) => {
   if (Object.values(AnyDataError).some((el) => el)) {
     return json<ActionData>(AnyDataError);
   }
-  const fields = { name, content };
+  const fields = { name, content , jokesterId: userId};
 
   const joke = await createJoke(fields);
   return redirect(`/jokes/${joke.id}`);
