@@ -9,7 +9,7 @@ import {
   Outlet,
   useLoaderData,
 } from "@remix-run/react";
-import { getUser } from "~/model/user.server";
+import { getUser, getUserId } from "~/model/user.server";
 
 import stylesUrl from "~/styles/jokes.css";
 
@@ -19,7 +19,9 @@ export const links: LinksFunction = () => {
 
 export const loader = async ({ request }: LoaderArgs) => {
   const db = new PrismaClient()
+  console.log('user' , await getUserId(request))
   const jokeListItems = await db.joke.findMany({
+    where: {jokesterId:await getUserId(request)} ,
     take: 5,
     orderBy: { createdAt: "desc" },
     select: { id: true, name: true },
