@@ -19,7 +19,7 @@ export async function login(username:string , password:string) {
     const isCorrectPassword = password===user.passwordHash
     if (!isCorrectPassword) return null;
   
-    return { id: user.id, username };
+    return { id: user.id, username:user.username };
   }
   const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {

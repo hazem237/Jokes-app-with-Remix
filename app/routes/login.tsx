@@ -48,16 +48,16 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     return redirect("/signup");
   }
   const loginType = form.get("loginType");
-  
+
   const username = form.get("username");
 
   const password = form.get("password");
-  console.log(username , password)
-  const user = await login(username , password);
-      console.log({ user });
-      if (!user) {
-       return json({message:"Errrrrrrror"})
-      }
+  console.log(username, password);
+  const user = await login(username, password);
+  console.log({ user });
+  if (!user) {
+    return json({ message: "There's no user" });
+  }
   const AnyMissingDataError = {
     username: username ? null : "name is reqired",
     password: password ? null : "password is reqired",
@@ -65,12 +65,13 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   if (Object.values(AnyMissingDataError).some((el) => el)) {
     return json<ActionData>(AnyMissingDataError);
   }
-  return createUserSession(user.id, '/jokes');
+  return createUserSession(user.id, "/jokes");
 };
 
 export default function Login() {
   const [searchParams] = useSearchParams();
   const AnyMissingDataError = useActionData() as ActionData;
+  console.log(AnyMissingDataError)
   return (
     <div className="container">
       <div className="content" data-light="">
