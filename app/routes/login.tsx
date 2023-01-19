@@ -65,7 +65,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   if (Object.values(AnyMissingDataError).some((el) => el)) {
     return json<ActionData>(AnyMissingDataError);
   }
-
   return createUserSession(user.id, '/jokes');
 };
 

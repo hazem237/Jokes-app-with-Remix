@@ -12,16 +12,25 @@ export default function IndexRoute() {
     <div className="container">
       <div className="content">
         <h1>
-          Remix <span>Jokes!</span> <span>😜</span>
+          Remix <span>Jokes!</span><span>😜</span>
         </h1>
         <nav>
-          <ul style={{marginTop:50}}>
+          <ul style={{ marginTop: 50 }}>
             <li>
-              <Link to="jokes" className="button" style={{marginTop:"150"}}>Read Jokes</Link>
+              {" "}
+              <Link to={"login"} className="button">
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link to={"signup"} className="button">
+                Signup
+              </Link>
             </li>
           </ul>
         </nav>
       </div>
+      <div className="btn-container"></div>
     </div>
   );
 }
